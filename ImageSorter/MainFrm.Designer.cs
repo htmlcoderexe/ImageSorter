@@ -31,9 +31,9 @@
             this.FolderProgress = new System.Windows.Forms.ProgressBar();
             this.MM = new System.Windows.Forms.MenuStrip();
             this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lockKeysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ImageContainer = new System.Windows.Forms.PictureBox();
             this.KeyBindList = new System.Windows.Forms.ListBox();
-            this.lockKeysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MM.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImageContainer)).BeginInit();
             this.SuspendLayout();
@@ -53,7 +53,7 @@
             this.lockKeysToolStripMenuItem});
             this.MM.Location = new System.Drawing.Point(0, 0);
             this.MM.Name = "MM";
-            this.MM.Size = new System.Drawing.Size(1032, 24);
+            this.MM.Size = new System.Drawing.Size(1032, 29);
             this.MM.TabIndex = 1;
             this.MM.Text = "menuStrip1";
             // 
@@ -64,12 +64,23 @@
             this.openFolderToolStripMenuItem.Text = "Open Folder";
             this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.openFolderToolStripMenuItem_Click);
             // 
+            // lockKeysToolStripMenuItem
+            // 
+            this.lockKeysToolStripMenuItem.CheckOnClick = true;
+            this.lockKeysToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Emoji", 12F);
+            this.lockKeysToolStripMenuItem.Name = "lockKeysToolStripMenuItem";
+            this.lockKeysToolStripMenuItem.Size = new System.Drawing.Size(44, 25);
+            this.lockKeysToolStripMenuItem.Text = "🌚";
+            this.lockKeysToolStripMenuItem.Click += new System.EventHandler(this.lockKeysToolStripMenuItem_Click);
+            // 
             // ImageContainer
             // 
+            this.ImageContainer.BackColor = System.Drawing.Color.Black;
             this.ImageContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ImageContainer.Location = new System.Drawing.Point(0, 24);
+            this.ImageContainer.Location = new System.Drawing.Point(0, 29);
             this.ImageContainer.Name = "ImageContainer";
-            this.ImageContainer.Size = new System.Drawing.Size(912, 447);
+            this.ImageContainer.Size = new System.Drawing.Size(912, 442);
+            this.ImageContainer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ImageContainer.TabIndex = 2;
             this.ImageContainer.TabStop = false;
             // 
@@ -77,17 +88,10 @@
             // 
             this.KeyBindList.Dock = System.Windows.Forms.DockStyle.Right;
             this.KeyBindList.FormattingEnabled = true;
-            this.KeyBindList.Location = new System.Drawing.Point(912, 24);
+            this.KeyBindList.Location = new System.Drawing.Point(912, 29);
             this.KeyBindList.Name = "KeyBindList";
-            this.KeyBindList.Size = new System.Drawing.Size(120, 447);
+            this.KeyBindList.Size = new System.Drawing.Size(120, 442);
             this.KeyBindList.TabIndex = 3;
-            // 
-            // lockKeysToolStripMenuItem
-            // 
-            this.lockKeysToolStripMenuItem.Name = "lockKeysToolStripMenuItem";
-            this.lockKeysToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
-            this.lockKeysToolStripMenuItem.Text = "Lock keys";
-            this.lockKeysToolStripMenuItem.Click += new System.EventHandler(this.lockKeysToolStripMenuItem_Click);
             // 
             // MainFrm
             // 
@@ -98,6 +102,7 @@
             this.Controls.Add(this.KeyBindList);
             this.Controls.Add(this.FolderProgress);
             this.Controls.Add(this.MM);
+            this.KeyPreview = true;
             this.MainMenuStrip = this.MM;
             this.Name = "MainFrm";
             this.Text = "Image Sorter";

@@ -22,12 +22,7 @@ namespace ImageSorter
             Key = ' ';
         }
 
-        bool IsNameInvalid(string s)
-        {
-            if (s.IndexOfAny(System.IO.Path.GetInvalidFileNameChars()) >= 0)
-                return true;
-            return false;
-        }
+        
         private void CreateKeyBinding_Load(object sender, EventArgs e)
         {
             if (Key != ' ')
@@ -54,7 +49,7 @@ namespace ImageSorter
 
         private void folderInput_TextChanged(object sender, EventArgs e)
         {
-            if (folderInput.Text != "" ||!IsNameInvalid(folderInput.Text))
+            if (folderInput.Text != "" ||!MainFrm.IsNameInvalid(folderInput.Text))
                 OkButt.Enabled = true;
             else
                 OkButt.Enabled = false;

@@ -13,6 +13,13 @@ namespace ImageSorter
 {
     public partial class MainFrm : Form
     {
+        //the program will try to look for this file for its settings
+        const string ConfigFileName = "ImageSorter.cfg";
+        //This character will separate keys and assigned folders 
+        //chosen because it is unlikely to occur as a keypress,
+        //looks like ":=" asignment operator and is actually
+        //a mathematical symbol (one of!) for assigning a variable.
+        const char Separator = '≔';
         //stores the file currently operated on
         string CurrentPath;
         //used to store the current directory
@@ -23,6 +30,15 @@ namespace ImageSorter
         Dictionary<char, string> SubFolders;
         //hardcoding the image extensions here for now.
         string[] extensions = { ".png",".jpg",".gif",".jpeg",".webp" };
+
+
+        public static bool IsNameInvalid(string s)
+        {
+            if (s.IndexOfAny(System.IO.Path.GetInvalidFileNameChars()) >= 0)
+                return true;
+            return false;
+        }
+
 
         /// <summary>
         /// Loads a list of all filenames with image-like extensions from a given folder.
@@ -66,12 +82,14 @@ namespace ImageSorter
                 ImageContainer.Image = null;
                 //tell the user
                 MessageBox.Show("This folder has no more images.", "Done!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                FolderProgress.Value = FolderProgress.Maximum;
+                Todo = null;
                 return;
             }
             //fetch the next item and update current and progress bar
             string FilePath = Todo.Dequeue();
             CurrentPath = FilePath;
-            FolderProgress.Value = Todo.Count() + 1;
+            FolderProgress.Value = FolderProgress.Maximum-(Todo.Count() + 1);
             //useful to display current path, maybe change it to a display box somewhere
             this.Text = CurrentPath;
             //try displaying the image
@@ -94,7 +112,6 @@ namespace ImageSorter
         {
             InitializeComponent();
             SubFolders = new Dictionary<char, string>();
-            SubFolders.Add(' ', "nsfw");
             UpdateKeyBindList();
         }
         //Select a folder to process
@@ -110,6 +127,124 @@ namespace ImageSorter
 
 
         }
+        /// <summary>
+        /// Try parsing a configuration line.
+        /// </summary>
+        /// <param name="line">Line to be parsed.</param>
+        /// <returns>true on success, false on faliure</returns>
+        KeyValuePair<char, string>? ParseConfigLine(string line)
+        {
+            //bail early if empty
+            if (line == "" || line == null)
+                return null;
+            //split the line into the keychar and the folder name
+            string[] parts = line.Split(new char[]{ Separator}, 2);
+            //sanity check, if there are not two parts, fail
+            if (parts.Length != 2)
+                return null;
+            if (parts[0].Length > 1)
+                return null;
+            //the first(and only) char of the first piece is the keychar
+            char keychar = parts[0][0];
+            //the second piece is the foldername
+            string folder = parts[1];
+            //check if foldername is valid for usage
+            if (IsNameInvalid(folder))
+                return null;
+            return new KeyValuePair<char, string>(keychar, folder);
+        }
+
+        /// <summary>
+        /// Try parsing a configuration file.
+        /// </summary>
+        /// <param name="lines">Array of configuration lines</param>
+        /// <returns>List of binding KVPs or empty list on failure</returns>
+        List<KeyValuePair<char, string>> ParseConfigFile(string[] lines)
+        {
+            List<KeyValuePair<char, string>> configs = new List<KeyValuePair<char, string>>();
+            //go over each line
+            for(int i =0;i< lines.Length;i++)
+            {
+                //try getting a valid config line
+                KeyValuePair<char, string>? kvp = ParseConfigLine(lines[i]);
+                //if line is valid, add to the config list
+                if(kvp.HasValue)
+                {
+                    configs.Add(kvp.Value);
+                }
+                else
+                {
+                    //last line is allowed to be invalid (most likely empty)
+                    //anywhere else, return empty list/fail
+                    if (i != lines.Length - 1)
+                    {
+                        return new List<KeyValuePair<char, string>>();
+                    }
+                }
+            }
+            //if not failed yet, return what is collected so far
+            return configs;
+        }
+
+        /// <summary>
+        /// Try loading a configuration file from a folder
+        /// </summary>
+        /// <param name="folderpath">Folder containing the file</param>
+        /// <returns>List of binding KVPs or null on fail</returns>
+        List<KeyValuePair<char,string>> LoadConfigFile(string folderpath)
+        {
+            List<KeyValuePair<char, string>> configs = new List<KeyValuePair<char, string>>();
+            //get the proper filename and try loading
+            string filepath = Path.Combine(folderpath, ConfigFileName);
+            //if file's missing, fail
+            if (!File.Exists(filepath))
+                return null;
+            string[] filecontents;
+            try
+            {
+                //try reading the file as lines and parsing those
+                filecontents = File.ReadAllLines(filepath);
+                configs = ParseConfigFile(filecontents);
+                //if non-empty list is returned, return it
+                if (configs.Count > 0)
+                    return configs;
+                //else fail
+                return null;
+            }
+            //couldn't load, don't care too much why right now, fail
+            catch(Exception ex)
+            {
+                return null;
+            }
+        }
+
+        bool SaveConfigFile(string folderpath)
+        {
+            //if there are no bindings, don't bother and fail
+            if (SubFolders.Count < 1)
+                return false;
+            string[] lines = new string[SubFolders.Count];
+            //squish the dictionary
+            KeyValuePair<char,string>[] bindings =SubFolders.ToArray();
+            //go slot per slot
+            for(int i=0;i<bindings.Length;i++)
+            {
+                //each line is the keychar, then ≔, then the subfolder
+                lines[i] = bindings[i].Key.ToString() + Separator.ToString() + bindings[i].Value;
+            }
+            //attempt to write the config to disk
+            try
+            {
+                File.WriteAllLines(Path.Combine(folderpath, ConfigFileName), lines);
+            }
+            //if write fails, so does this function
+            catch(Exception ex)
+            {
+                return false;
+            }
+            return true;
+        }
+
         /// <summary>
         /// Load a folder for processing.
         /// </summary>
@@ -128,38 +263,82 @@ namespace ImageSorter
             }
             //set the progress bar
             FolderProgress.Maximum = FileNames.Count();
-            //create the default NSFW folder
-            string nsfwfolderpath = Path.Combine(path, "nsfw");
-            try
+            //refresh the bind list
+            SubFolders.Clear();
+            //try loading a configuration file from the target folder
+            List<KeyValuePair<char, string>> configs = LoadConfigFile(path);
+            //if successful, load all keybinds from it
+            if(configs!=null)
             {
-                Directory.CreateDirectory(nsfwfolderpath);
+                foreach(KeyValuePair<char,string> kvp in configs)
+                {
+                    LoadKeyBind(path, kvp.Key, kvp.Value);
+                }
             }
-            //usually this only fails if there is a file named "nsfw" exactly, in which case, try a random name
-            catch(Exception ex)
+            //else try default config (should be in the application's own folder)
+            //for now there's no way to adjust it except for copying one created for a specific folder
+            else
             {
-                string newrandomstring = Path.GetRandomFileName();
-
-                try
+                configs = LoadConfigFile(Path.GetDirectoryName(Application.ExecutablePath));
+                //if successful, load all keybinds from it
+                if (configs != null)
                 {
-                    Directory.CreateDirectory(Path.Combine(path, "nsfw_"+newrandomstring));
+                    foreach (KeyValuePair<char, string> kvp in configs)
+                    {
+                        LoadKeyBind(path, kvp.Key, kvp.Value);
+                    }
                 }
-                //either something else went wrong, or we're astronomically unlucky - display error and exit
-                catch(Exception ex2)
+                //if that fails, load this default hardcoded preset
+                else
                 {
-                    MessageBox.Show("Could not create NSFW folder. The program will now exit. See if the below information helps clarify the cause of the issue:\r\n" + ex2.Message, "We tried", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    this.Close();
+                    LoadKeyBind(path, ' ', "nsfw");
                 }
-
             }
-
+            //refresh the pane that shows the bindings 
             UpdateKeyBindList();
         }
+
+        bool LoadKeyBind(string workingdir, char key, string target)
+        {
+            //create the corresponding folder
+            string folderpath = Path.Combine(workingdir, target);
+            try
+            {
+                Directory.CreateDirectory(folderpath);
+            }
+            //usually this only fails if there is a file named like the target exactly, in which case, try a random name
+            catch (Exception ex)
+            {
+                
+                string newrandomstring = Path.GetRandomFileName();
+                
+                try
+                {
+                    Directory.CreateDirectory(Path.Combine(workingdir, target+"_" + newrandomstring));
+
+                }
+                //either something else went wrong, or we're astronomically unlucky - display error and give the option to exit
+                catch (Exception ex2)
+                {
+                    MessageBox.Show("Could not create \""+ target + "_" + newrandomstring + "\" folder for <"+key.ToString()+"> keybind. You now may choose to exit the program by clicking \"Yes\". The below information may clarify the cause of the issue:\r\n" + ex2.Message, "We tried", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                    return false;
+                }
+                //tell the user the folder had to be renamed...
+                MessageBox.Show("Could not create \"" + target + "\" folder for <" + key.ToString() + "> keybind.\r\nThe program was able to use a fallback name: \"" + target + "_" + newrandomstring + "\"\r\n See if the below information helps clarify the cause of the issue:\r\n" + ex.Message, "We tried", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+
+            }
+            SubFolders.Add(key, target);
+            return true;
+        }
+
+
         /// <summary>
         /// Moves a file located at a specified path, triggered by a keypress.
         /// </summary>
         /// <param name="key">Triggering keypress</param>
         /// <param name="path">Path of the file to be moved</param>
-        /// <returns>true if the file was moved, false otherwise</returns>
+        /// <returns>true if the system may advance to the  next file</returns>
         bool MoveByKey(char key,string path)
         {
             //get the parent dir
@@ -171,6 +350,7 @@ namespace ImageSorter
             if(!SubFolders.ContainsKey(key))
             {
                 MessageBox.Show("Missing keybinding for <"+key.ToString()+">", "Keybinding error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //do not advance as the user may want to enter a correct key or create a new one
                 return false;
             }
             string targetname = SubFolders[key];
@@ -184,7 +364,8 @@ namespace ImageSorter
             catch(Exception ex)
             {
                 MessageBox.Show("Failed to move file.\r\n"+ex.Message, "File error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                //allow the system to advance in case of broken files
+                return true;
             }
             //if nothing went wrong and the file was moved, confirm success
             return true;
@@ -206,7 +387,10 @@ namespace ImageSorter
             //if folder was selected successfully, add the binding
             if(prompt.DialogResult== DialogResult.OK)
                 SubFolders.Add(keypress, prompt.Folder);
+            //refresh the keybind display
             UpdateKeyBindList();
+            //write the config
+            SaveConfigFile(CurrentDir.FullName);
         }
        
         private void MainFrm_KeyPress(object sender, KeyPressEventArgs e)
@@ -215,23 +399,31 @@ namespace ImageSorter
             if (Todo == null)
                 return;
             //if there's nothing in the queue, do nothing
-            if (Todo.Count < 1)
-                return;
+          //  if (Todo.Count() < 1)
+           //     return;
             //if keypress is not in the bindings list and the Lock setting is not on, create a new binding
             if (!SubFolders.ContainsKey(e.KeyChar) && !lockKeysToolStripMenuItem.Checked)
             {
                 CreateNewKey(e.KeyChar);
             }
             //move the file according to the key pressed
-            MoveByKey(e.KeyChar, CurrentPath);
-            //get to the next item
-            Advance();
+            if(MoveByKey(e.KeyChar, CurrentPath))
+            {
+                //get to the next item
+                Advance();
+            }
         }
 
         private void lockKeysToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            lockKeysToolStripMenuItem.Text = lockKeysToolStripMenuItem.Checked ? "🌝" : "🌚";
             //basically a toggle
-            lockKeysToolStripMenuItem.Checked = !lockKeysToolStripMenuItem.Checked;
+            // lockKeysToolStripMenuItem.Checked = !lockKeysToolStripMenuItem.Checked;
+        }
+
+        private void KeyBindList_DoubleClick(object sender, EventArgs e)
+        {
+
         }
     }
 }
