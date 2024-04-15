@@ -367,7 +367,7 @@ namespace ImageSorter
                 //either something else went wrong, or we're astronomically unlucky - display error and give the option to exit
                 catch (Exception ex2)
                 {
-                    MessageBox.Show("Could not create \""+ target + "_" + newrandomstring + "\" folder for <"+key.ToString()+"> keybind. You now may choose to exit the program by clicking \"Yes\". The below information may clarify the cause of the issue:\r\n" + ex2.Message, "We tried", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                    MessageBox.Show("Could not create \""+ target + "_" + newrandomstring + "\" folder for <"+key.ToString()+"> keybind. This keybind will be unavailable. The below information may clarify the cause of the issue:\r\n" + ex2.Message, "We tried", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 //tell the user the folder had to be renamed...
