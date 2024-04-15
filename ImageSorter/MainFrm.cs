@@ -22,6 +22,8 @@ namespace ImageSorter
         const char Separator = '≔';
         //stores the file currently operated on
         string CurrentPath;
+        //used for rename functionality, stores new filename that will be used in the target dir
+        string NewFileName = "";
         //used to store the current directory
         DirectoryInfo CurrentDir;
         //queue to progress through the folder
@@ -40,7 +42,28 @@ namespace ImageSorter
                 return true;
             return false;
         }
+        /// <summary>
+        /// Tries to find a filename that would not collide with an existing one.
+        /// </summary>
+        /// <param name="filename">The colliding file name.</param>
+        /// <param name="folder">Target folder</param>
+        /// <returns></returns>
+        string GetFreeFileName(string filename, string folder)
+        {
+            string ext = Path.GetExtension(filename);
+            string name = Path.GetFileNameWithoutExtension(filename);
+            
+            int counter = 2;
+            string candidatename = name + "_" + counter.ToString()+ext;
 
+            while (File.Exists(Path.Combine(folder, candidatename)))
+            {
+                counter++;
+                candidatename = name + "_" + counter.ToString() + ext;
+            }
+
+            return candidatename;
+        }
 
         /// <summary>
         /// Loads a list of all filenames with image-like extensions from a given folder.
@@ -126,6 +149,8 @@ namespace ImageSorter
             string FilePath = Todo.First();
             Todo.RemoveFirst();
             CurrentPath = FilePath;
+            //reset rename function
+            NewFileName = "";
             //update progress bar
             FolderProgress.Value = FolderProgress.Maximum-(Todo.Count() + 1);
             //update progress bar label
@@ -399,8 +424,8 @@ namespace ImageSorter
         {
             //get the parent dir
             string foldername = Path.GetDirectoryName(path);
-            //get the filename
-            string filename = Path.GetFileName(path);
+            //get the filename, if rename exists, use that instead
+            string filename =NewFileName =="" ? Path.GetFileName(path) : NewFileName;
             //get the correct target subfolder based on the keypress
             //check if there's a folder defined for the key and display an error if not
             if(!SubFolders.ContainsKey(key))
@@ -414,7 +439,42 @@ namespace ImageSorter
             string completepath = Path.Combine(foldername, targetname, filename);
             try
             {
-                File.Move(path, completepath);
+                //if there's a file with the same name in the target folder (for example due to the rename function).
+                //try to create an automatic rename and offer it to the user
+                if(File.Exists(completepath))
+                {
+                    string replacementname = GetFreeFileName(filename, Path.GetDirectoryName(completepath));
+                    DialogResult replacefile = MessageBox.Show("File \""+filename+"\" already exists in folder. Do you want to use this name instead?\r\n"+replacementname, "File error", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    //if user accepts, proceed with the move as normal
+                    if (replacefile== DialogResult.Yes)
+                    {
+                        //build the new path
+                        completepath = Path.Combine(foldername, targetname, replacementname);
+                        try
+                        {
+
+                            File.Move(path, completepath);
+                        }
+                        //show an error message in case of failure
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Failed to move file.\r\n" + ex.Message, "File error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            //allow the system to advance in case of broken files
+                            return true;
+                        }
+                    }
+                    //else cancel the action
+                    else
+                    {
+
+                        return false;
+                    }
+                }
+                //if there is no file conflict, simply try to move the file
+                else
+                {
+                    File.Move(path, completepath);
+                }
             }
             //show an error message in case of failure
             catch(Exception ex)
@@ -494,6 +554,17 @@ namespace ImageSorter
             progresslabel.Location = FolderProgress.Location;
             progresslabel.Size = FolderProgress.Size;
         }
-        
+        //show rename dialog and set the rename target 
+        private void renameOnMoveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RenameFile prompt = new RenameFile();
+            //get extension of current file
+            prompt.FileExtension = Path.GetExtension(CurrentPath);
+            DialogResult result = prompt.ShowDialog();
+            if(result== DialogResult.OK)
+            {
+                NewFileName = prompt.FileName;
+            }
+        }
     }
 }

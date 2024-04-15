@@ -82,7 +82,7 @@
             this.CancelButt.Name = "CancelButt";
             this.CancelButt.Size = new System.Drawing.Size(75, 23);
             this.CancelButt.TabIndex = 4;
-            this.CancelButt.Text = "button1";
+            this.CancelButt.Text = "Cancel";
             this.CancelButt.UseVisualStyleBackColor = true;
             // 
             // CreateKeyBinding

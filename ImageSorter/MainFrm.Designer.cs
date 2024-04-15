@@ -36,6 +36,7 @@
             this.KeyBindList = new System.Windows.Forms.ListBox();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.progresslabel = new System.Windows.Forms.Label();
+            this.renameOnMoveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MM.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImageContainer)).BeginInit();
             this.SuspendLayout();
@@ -53,7 +54,8 @@
             this.MM.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openFolderToolStripMenuItem,
             this.lockKeysToolStripMenuItem,
-            this.undoToolStripMenuItem});
+            this.undoToolStripMenuItem,
+            this.renameOnMoveToolStripMenuItem});
             this.MM.Location = new System.Drawing.Point(0, 0);
             this.MM.Name = "MM";
             this.MM.Size = new System.Drawing.Size(1032, 29);
@@ -114,6 +116,14 @@
             this.progresslabel.Text = "---/---";
             this.progresslabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // renameOnMoveToolStripMenuItem
+            // 
+            this.renameOnMoveToolStripMenuItem.Name = "renameOnMoveToolStripMenuItem";
+            this.renameOnMoveToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
+            this.renameOnMoveToolStripMenuItem.Size = new System.Drawing.Size(112, 25);
+            this.renameOnMoveToolStripMenuItem.Text = "Rename on move";
+            this.renameOnMoveToolStripMenuItem.Click += new System.EventHandler(this.renameOnMoveToolStripMenuItem_Click);
+            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -148,6 +158,7 @@
         private System.Windows.Forms.ToolStripMenuItem lockKeysToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.Label progresslabel;
+        private System.Windows.Forms.ToolStripMenuItem renameOnMoveToolStripMenuItem;
     }
 }
 
