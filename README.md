@@ -15,3 +15,7 @@ That means not only different actions for upper/lowercase, but also different al
 The program in action:
 
 ![screenshot](https://raw.githubusercontent.com/htmlcoderexe/ImageSorter/main/screenshot.png)
+
+The key presets are saved every time anything changes, in the folder currently worked on. This means closing and reopening the application will restore the bindings, as well as that each folder can have its own set, customised for a specific purpose - once you've sorted everything into generic "screenshots", "memes", "photos" and whatever else, you can open the subfolders with this program and get specific.
+
+It is also possible to copy a particularly useful bindings file to the same directory as you're running the EXE from - it will use those as default. This may become a feature - allow to overwrite the default preset with current preset.
