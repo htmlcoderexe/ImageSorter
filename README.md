@@ -19,3 +19,7 @@ The program in action:
 The key presets are saved every time anything changes, in the folder currently worked on. This means closing and reopening the application will restore the bindings, as well as that each folder can have its own set, customised for a specific purpose - once you've sorted everything into generic "screenshots", "memes", "photos" and whatever else, you can open the subfolders with this program and get specific.
 
 It is also possible to copy a particularly useful bindings file to the same directory as you're running the EXE from - it will use those as default. This may become a feature - allow to overwrite the default preset with current preset.
+
+If you accidentally pressed the wrong button and sent an image the wrong way, you can now undo this with the ``Ctrl+Z`` shortcut. Actions can be undone as far back as the beginning of the specific folder session - quitting the program or opening a different folder clears the undo history.
+
+Pressing F2 now allows to specify a custom filename to be used for the image when it gets moved to target folder - as a consequence of this, the program checks if a file by that name already exists in that folder, attempts to create a useable filename and offers the user the option of using that as the destination filename to complete the move.

@@ -96,6 +96,7 @@
             this.Controls.Add(this.OkButt);
             this.Controls.Add(this.folderInput);
             this.Controls.Add(this.KeyCharLabel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "CreateKeyBinding";

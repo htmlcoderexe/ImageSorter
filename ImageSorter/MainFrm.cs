@@ -493,7 +493,7 @@ namespace ImageSorter
         /// Create a new keybinding/folder combination with user prompt.
         /// </summary>
         /// <param name="keypress">The target keybinding.</param>
-        void CreateNewKey(char keypress)
+        bool CreateNewKey(char keypress)
         {
             //initialise the form
             CreateKeyBinding prompt = new CreateKeyBinding
@@ -505,11 +505,19 @@ namespace ImageSorter
             prompt.ShowDialog();
             //if folder was selected successfully, add the binding
             if(prompt.DialogResult== DialogResult.OK)
+            {
                 SubFolders.Add(keypress, prompt.Folder);
+            }
+            //user cancelled the operation somehow
+            else
+            {
+                return false;
+            }
             //refresh the keybind display
             UpdateKeyBindList();
             //write the config
             SaveConfigFile(CurrentDir.FullName);
+            return true;
         }
        
         private void MainFrm_KeyPress(object sender, KeyPressEventArgs e)
@@ -520,10 +528,25 @@ namespace ImageSorter
             //if there's nothing in the queue, do nothing
           //  if (Todo.Count() < 1)
            //     return;
-            //if keypress is not in the bindings list and the Lock setting is not on, create a new binding
-            if (!SubFolders.ContainsKey(e.KeyChar) && !lockKeysToolStripMenuItem.Checked)
+            //if keypress is not in the bindings list, check the lock setting
+            if (!SubFolders.ContainsKey(e.KeyChar))
             {
-                CreateNewKey(e.KeyChar);
+                //if locked, display a message informing the user about the lock and cancel
+                if(lockKeysToolStripMenuItem.Checked)
+                {
+                    MessageBox.Show("There is no folder registered for <" + e.KeyChar.ToString() + ">. New keybindings may only be created when the keys are unlocked, press Ctrl+L to toggle.", "Unrecognised key", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                //else try to create a new binding
+                else
+                {
+                    //if key creation is cancelled, do nothing and return.
+                    if(!CreateNewKey(e.KeyChar))
+                    {
+                        return;
+                    }
+                    //otherwise proceed further and attempt the move
+                }
             }
             //move the file according to the key pressed
             if(MoveByKey(e.KeyChar, CurrentPath))
@@ -536,7 +559,7 @@ namespace ImageSorter
         private void lockKeysToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //yeah, this is stupid, replace it with actual image buttons
-            lockKeysToolStripMenuItem.Text = lockKeysToolStripMenuItem.Checked ? "🌝" : "🌚";
+            lockKeysToolStripMenuItem.Text = lockKeysToolStripMenuItem.Checked ? "Unlock keybinds" : "Lock keybinds";
         }
 
         private void KeyBindList_DoubleClick(object sender, EventArgs e)

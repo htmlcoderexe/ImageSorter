@@ -58,33 +58,35 @@
             this.renameOnMoveToolStripMenuItem});
             this.MM.Location = new System.Drawing.Point(0, 0);
             this.MM.Name = "MM";
-            this.MM.Size = new System.Drawing.Size(1032, 29);
+            this.MM.Size = new System.Drawing.Size(1032, 24);
             this.MM.TabIndex = 1;
             this.MM.Text = "menuStrip1";
             // 
             // openFolderToolStripMenuItem
             // 
             this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
-            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(84, 25);
+            this.openFolderToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(84, 20);
             this.openFolderToolStripMenuItem.Text = "Open Folder";
             this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.openFolderToolStripMenuItem_Click);
             // 
             // lockKeysToolStripMenuItem
             // 
             this.lockKeysToolStripMenuItem.CheckOnClick = true;
-            this.lockKeysToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Emoji", 12F);
+            this.lockKeysToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lockKeysToolStripMenuItem.Name = "lockKeysToolStripMenuItem";
-            this.lockKeysToolStripMenuItem.Size = new System.Drawing.Size(44, 25);
-            this.lockKeysToolStripMenuItem.Text = "🌚";
+            this.lockKeysToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
+            this.lockKeysToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
+            this.lockKeysToolStripMenuItem.Text = "Lock keybinds";
             this.lockKeysToolStripMenuItem.Click += new System.EventHandler(this.lockKeysToolStripMenuItem_Click);
             // 
             // ImageContainer
             // 
             this.ImageContainer.BackColor = System.Drawing.Color.Black;
             this.ImageContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ImageContainer.Location = new System.Drawing.Point(0, 29);
+            this.ImageContainer.Location = new System.Drawing.Point(0, 24);
             this.ImageContainer.Name = "ImageContainer";
-            this.ImageContainer.Size = new System.Drawing.Size(912, 442);
+            this.ImageContainer.Size = new System.Drawing.Size(912, 447);
             this.ImageContainer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ImageContainer.TabIndex = 2;
             this.ImageContainer.TabStop = false;
@@ -93,9 +95,9 @@
             // 
             this.KeyBindList.Dock = System.Windows.Forms.DockStyle.Right;
             this.KeyBindList.FormattingEnabled = true;
-            this.KeyBindList.Location = new System.Drawing.Point(912, 29);
+            this.KeyBindList.Location = new System.Drawing.Point(912, 24);
             this.KeyBindList.Name = "KeyBindList";
-            this.KeyBindList.Size = new System.Drawing.Size(120, 442);
+            this.KeyBindList.Size = new System.Drawing.Size(120, 447);
             this.KeyBindList.TabIndex = 3;
             // 
             // undoToolStripMenuItem
