@@ -117,6 +117,8 @@ namespace ImageSorter
                 //tell the user
                 MessageBox.Show("This folder has no more images.", "Done!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 FolderProgress.Value = FolderProgress.Maximum;
+                //update the label
+                progresslabel.Text = FolderProgress.Maximum+"/" + FolderProgress.Maximum.ToString();
                 Todo = null;
                 return;
             }
@@ -124,7 +126,10 @@ namespace ImageSorter
             string FilePath = Todo.First();
             Todo.RemoveFirst();
             CurrentPath = FilePath;
+            //update progress bar
             FolderProgress.Value = FolderProgress.Maximum-(Todo.Count() + 1);
+            //update progress bar label
+            progresslabel.Text=(FolderProgress.Maximum - (Todo.Count() + 1)).ToString()+"/" + FolderProgress.Maximum.ToString();
             //useful to display current path, maybe change it to a display box somewhere
             this.Text = CurrentPath;
             //try displaying the image
@@ -149,6 +154,9 @@ namespace ImageSorter
             SubFolders = new Dictionary<char, string>();
             UpdateKeyBindList();
             UndoStack = new Stack<Tuple<string, string>>();
+            //align the label to the progress bar on form init
+            progresslabel.Location = FolderProgress.Location;
+            progresslabel.Size = FolderProgress.Size;
         }
         //Select a folder to process
         private void openFolderToolStripMenuItem_Click(object sender, EventArgs e)
@@ -471,5 +479,12 @@ namespace ImageSorter
         {
             Undo();
         }
+        //align the progress label to the progress bar on resize
+        private void MainFrm_SizeChanged(object sender, EventArgs e)
+        {
+            progresslabel.Location = FolderProgress.Location;
+            progresslabel.Size = FolderProgress.Size;
+        }
+        
     }
 }

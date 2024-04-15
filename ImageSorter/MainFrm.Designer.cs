@@ -35,6 +35,7 @@
             this.ImageContainer = new System.Windows.Forms.PictureBox();
             this.KeyBindList = new System.Windows.Forms.ListBox();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.progresslabel = new System.Windows.Forms.Label();
             this.MM.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImageContainer)).BeginInit();
             this.SuspendLayout();
@@ -103,11 +104,22 @@
             this.undoToolStripMenuItem.Text = "Undo";
             this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
             // 
+            // progresslabel
+            // 
+            this.progresslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.progresslabel.Location = new System.Drawing.Point(423, 474);
+            this.progresslabel.Name = "progresslabel";
+            this.progresslabel.Size = new System.Drawing.Size(100, 23);
+            this.progresslabel.TabIndex = 4;
+            this.progresslabel.Text = "---/---";
+            this.progresslabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1032, 494);
+            this.Controls.Add(this.progresslabel);
             this.Controls.Add(this.ImageContainer);
             this.Controls.Add(this.KeyBindList);
             this.Controls.Add(this.FolderProgress);
@@ -116,6 +128,7 @@
             this.MainMenuStrip = this.MM;
             this.Name = "MainFrm";
             this.Text = "Image Sorter";
+            this.SizeChanged += new System.EventHandler(this.MainFrm_SizeChanged);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.MainFrm_KeyPress);
             this.MM.ResumeLayout(false);
             this.MM.PerformLayout();
@@ -134,6 +147,7 @@
         private System.Windows.Forms.ListBox KeyBindList;
         private System.Windows.Forms.ToolStripMenuItem lockKeysToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
+        private System.Windows.Forms.Label progresslabel;
     }
 }
 
