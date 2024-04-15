@@ -25,9 +25,11 @@ namespace ImageSorter
         //used to store the current directory
         DirectoryInfo CurrentDir;
         //queue to progress through the folder
-        Queue<string> Todo;
+        LinkedList<string> Todo;
         //this is the dictionary that will hold all the keybindings
         Dictionary<char, string> SubFolders;
+        //this will hold the Undo stack
+        Stack<Tuple<string, string>> UndoStack;
         //hardcoding the image extensions here for now.
         string[] extensions = { ".png",".jpg",".gif",".jpeg",".webp" };
 
@@ -55,7 +57,9 @@ namespace ImageSorter
             }
             return result;
         }
-
+        /// <summary>
+        /// Refreshes the right-hand pane showing currently available keybinds
+        /// </summary>
         void UpdateKeyBindList()
         {
             KeyBindList.Items.Clear();
@@ -63,6 +67,36 @@ namespace ImageSorter
             {
                 KeyBindList.Items.Add("<" + kvp.Key.ToString() + "> = " + kvp.Value);
             }
+        }
+        /// <summary>
+        /// Undoes a single file operation.
+        /// </summary>
+        void Undo()
+        {
+            //do nothing if there are no undos available
+            if (UndoStack == null || UndoStack.Count == 0)
+                return;
+
+            //get the most recent operation
+            Tuple<string, string> UndoEntry = UndoStack.Pop();
+            //attempt to reverse the move
+            try
+            {
+                File.Move(UndoEntry.Item2, UndoEntry.Item1);
+            }
+            //show an error message in case of failure
+            catch (Exception ex)
+            {
+                MessageBox.Show("Undo failed!\r\n" + ex.Message, "File error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //no point in doing anything else
+                return;
+            }
+            FolderProgress.Value += 1;
+            //put the current file back into the queue
+            Todo.AddFirst(CurrentPath);
+            //put the recently undone file back into the queue and advance to it
+            Todo.AddFirst(UndoEntry.Item1);
+            Advance();
         }
 
         /// <summary>
@@ -87,7 +121,8 @@ namespace ImageSorter
                 return;
             }
             //fetch the next item and update current and progress bar
-            string FilePath = Todo.Dequeue();
+            string FilePath = Todo.First();
+            Todo.RemoveFirst();
             CurrentPath = FilePath;
             FolderProgress.Value = FolderProgress.Maximum-(Todo.Count() + 1);
             //useful to display current path, maybe change it to a display box somewhere
@@ -113,6 +148,7 @@ namespace ImageSorter
             InitializeComponent();
             SubFolders = new Dictionary<char, string>();
             UpdateKeyBindList();
+            UndoStack = new Stack<Tuple<string, string>>();
         }
         //Select a folder to process
         private void openFolderToolStripMenuItem_Click(object sender, EventArgs e)
@@ -256,13 +292,14 @@ namespace ImageSorter
             //fetch a list of all images
             List<string> FileNames = GetImageFiles(path);
             //create and populate a queue to process one item at a time
-            Todo = new Queue<string>();
+            Todo = new LinkedList<string>();
             foreach(string filepath in FileNames)
             {
-                Todo.Enqueue(filepath);
+                Todo.AddLast(filepath);
             }
             //set the progress bar
             FolderProgress.Maximum = FileNames.Count();
+            FolderProgress.Value = 0;
             //refresh the bind list
             SubFolders.Clear();
             //try loading a configuration file from the target folder
@@ -294,6 +331,8 @@ namespace ImageSorter
                     LoadKeyBind(path, ' ', "nsfw");
                 }
             }
+            //reset undo stack
+            UndoStack.Clear();
             //refresh the pane that shows the bindings 
             UpdateKeyBindList();
         }
@@ -367,7 +406,10 @@ namespace ImageSorter
                 //allow the system to advance in case of broken files
                 return true;
             }
-            //if nothing went wrong and the file was moved, confirm success
+            //if nothing went wrong and the file was moved,
+            //add an undo entry
+            UndoStack.Push(new Tuple<string,string>(path, completepath));
+            //return success - proceed to next image
             return true;
         }
         /// <summary>
@@ -423,6 +465,11 @@ namespace ImageSorter
         private void KeyBindList_DoubleClick(object sender, EventArgs e)
         {
 
+        }
+
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Undo();
         }
     }
 }

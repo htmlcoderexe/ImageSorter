@@ -34,6 +34,7 @@
             this.lockKeysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ImageContainer = new System.Windows.Forms.PictureBox();
             this.KeyBindList = new System.Windows.Forms.ListBox();
+            this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MM.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImageContainer)).BeginInit();
             this.SuspendLayout();
@@ -50,7 +51,8 @@
             // 
             this.MM.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openFolderToolStripMenuItem,
-            this.lockKeysToolStripMenuItem});
+            this.lockKeysToolStripMenuItem,
+            this.undoToolStripMenuItem});
             this.MM.Location = new System.Drawing.Point(0, 0);
             this.MM.Name = "MM";
             this.MM.Size = new System.Drawing.Size(1032, 29);
@@ -60,7 +62,7 @@
             // openFolderToolStripMenuItem
             // 
             this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
-            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(84, 20);
+            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(84, 25);
             this.openFolderToolStripMenuItem.Text = "Open Folder";
             this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.openFolderToolStripMenuItem_Click);
             // 
@@ -93,6 +95,14 @@
             this.KeyBindList.Size = new System.Drawing.Size(120, 442);
             this.KeyBindList.TabIndex = 3;
             // 
+            // undoToolStripMenuItem
+            // 
+            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
+            this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(48, 25);
+            this.undoToolStripMenuItem.Text = "Undo";
+            this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
+            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -123,6 +133,7 @@
         private System.Windows.Forms.PictureBox ImageContainer;
         private System.Windows.Forms.ListBox KeyBindList;
         private System.Windows.Forms.ToolStripMenuItem lockKeysToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
     }
 }
 
