@@ -129,7 +129,7 @@ namespace ImageSorter
             //update progress bar
             FolderProgress.Value = FolderProgress.Maximum-(Todo.Count() + 1);
             //update progress bar label
-            progresslabel.Text=(FolderProgress.Maximum - (Todo.Count() + 1)).ToString()+"/" + FolderProgress.Maximum.ToString();
+            progresslabel.Text=(FolderProgress.Maximum - (Todo.Count())).ToString()+"/" + FolderProgress.Maximum.ToString();
             //useful to display current path, maybe change it to a display box somewhere
             this.Text = CurrentPath;
             //try displaying the image
@@ -336,7 +336,16 @@ namespace ImageSorter
                 //if that fails, load this default hardcoded preset
                 else
                 {
-                    LoadKeyBind(path, ' ', "nsfw");
+                    bool errorcheck = LoadKeyBind(path, ' ', "nsfw");
+                    //if for some reason that fails, inform the user and offer to close the program.
+                    if (!errorcheck)
+                    {
+                        DialogResult exitrequest = MessageBox.Show("Unable to create default keybind - check if you are able to make changes to the target directory. Would you like to exit the program?", "Folder write error (probably)", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                        if(exitrequest == DialogResult.Yes)
+                        {
+                            this.Close();
+                        }
+                    }
                 }
             }
             //reset undo stack
