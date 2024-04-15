@@ -416,9 +416,8 @@ namespace ImageSorter
 
         private void lockKeysToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //yeah, this is stupid, replace it with actual image buttons
             lockKeysToolStripMenuItem.Text = lockKeysToolStripMenuItem.Checked ? "🌝" : "🌚";
-            //basically a toggle
-            // lockKeysToolStripMenuItem.Checked = !lockKeysToolStripMenuItem.Checked;
         }
 
         private void KeyBindList_DoubleClick(object sender, EventArgs e)
