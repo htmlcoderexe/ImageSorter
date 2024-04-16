@@ -38,8 +38,11 @@
             this.ImageContainer = new System.Windows.Forms.PictureBox();
             this.KeyBindList = new System.Windows.Forms.ListBox();
             this.progresslabel = new System.Windows.Forms.Label();
+            this.MainControls = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.MM.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImageContainer)).BeginInit();
+            this.MainControls.SuspendLayout();
             this.SuspendLayout();
             // 
             // FolderProgress
@@ -139,11 +142,32 @@
             this.progresslabel.Text = "---/---";
             this.progresslabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // MainControls
+            // 
+            this.MainControls.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton1});
+            this.MainControls.Location = new System.Drawing.Point(0, 24);
+            this.MainControls.Name = "MainControls";
+            this.MainControls.Size = new System.Drawing.Size(912, 135);
+            this.MainControls.TabIndex = 5;
+            this.MainControls.Text = "toolStrip1";
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = global::ImageSorter.Properties.Resources.IconOpenFile;
+            this.toolStripButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(132, 132);
+            this.toolStripButton1.Text = "toolStripButton1";
+            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1032, 494);
+            this.Controls.Add(this.MainControls);
             this.Controls.Add(this.progresslabel);
             this.Controls.Add(this.ImageContainer);
             this.Controls.Add(this.KeyBindList);
@@ -158,6 +182,8 @@
             this.MM.ResumeLayout(false);
             this.MM.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImageContainer)).EndInit();
+            this.MainControls.ResumeLayout(false);
+            this.MainControls.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -175,6 +201,8 @@
         private System.Windows.Forms.Label progresslabel;
         private System.Windows.Forms.ToolStripMenuItem renameOnMoveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
+        private System.Windows.Forms.ToolStrip MainControls;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }
 
