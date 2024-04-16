@@ -35,14 +35,15 @@
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameOnMoveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ImageContainer = new System.Windows.Forms.PictureBox();
             this.KeyBindList = new System.Windows.Forms.ListBox();
             this.progresslabel = new System.Windows.Forms.Label();
             this.MainControls = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.ImageContainer = new System.Windows.Forms.PictureBox();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.MM.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ImageContainer)).BeginInit();
             this.MainControls.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ImageContainer)).BeginInit();
             this.SuspendLayout();
             // 
             // FolderProgress
@@ -112,17 +113,6 @@
             this.refreshToolStripMenuItem.Text = "Refresh";
             this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
             // 
-            // ImageContainer
-            // 
-            this.ImageContainer.BackColor = System.Drawing.Color.Black;
-            this.ImageContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ImageContainer.Location = new System.Drawing.Point(0, 0);
-            this.ImageContainer.Name = "ImageContainer";
-            this.ImageContainer.Size = new System.Drawing.Size(912, 471);
-            this.ImageContainer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.ImageContainer.TabIndex = 2;
-            this.ImageContainer.TabStop = false;
-            // 
             // KeyBindList
             // 
             this.KeyBindList.Dock = System.Windows.Forms.DockStyle.Right;
@@ -146,7 +136,8 @@
             // MainControls
             // 
             this.MainControls.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1});
+            this.toolStripButton1,
+            this.toolStripButton2});
             this.MainControls.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.MainControls.Location = new System.Drawing.Point(0, 0);
             this.MainControls.Name = "MainControls";
@@ -163,6 +154,28 @@
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(36, 36);
             this.toolStripButton1.Text = "Open Folder";
+            // 
+            // ImageContainer
+            // 
+            this.ImageContainer.BackColor = System.Drawing.Color.Black;
+            this.ImageContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ImageContainer.Location = new System.Drawing.Point(0, 0);
+            this.ImageContainer.Name = "ImageContainer";
+            this.ImageContainer.Size = new System.Drawing.Size(912, 471);
+            this.ImageContainer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.ImageContainer.TabIndex = 2;
+            this.ImageContainer.TabStop = false;
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.CheckOnClick = true;
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton2.Image = global::ImageSorter.Properties.Resources.IconUndo;
+            this.toolStripButton2.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(36, 36);
+            this.toolStripButton2.Text = "Undo";
             // 
             // MainFrm
             // 
@@ -183,9 +196,9 @@
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.MainFrm_KeyPress);
             this.MM.ResumeLayout(false);
             this.MM.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ImageContainer)).EndInit();
             this.MainControls.ResumeLayout(false);
             this.MainControls.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ImageContainer)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -205,6 +218,7 @@
         private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
         private System.Windows.Forms.ToolStrip MainControls;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
     }
 }
 
