@@ -35,6 +35,8 @@ namespace ImageSorter
         //hardcoding the image extensions here for now.
         string[] extensions = { ".png",".jpg",".gif",".jpeg",".webp" };
 
+        //to keep the progress bar text
+        string ProgressLabel = "---/---";
 
         public static bool IsNameInvalid(string s)
         {
@@ -180,8 +182,12 @@ namespace ImageSorter
             UpdateKeyBindList();
             UndoStack = new Stack<Tuple<string, string>>();
             //align the label to the progress bar on form init
-            progresslabel.Location = FolderProgress.Location;
-            progresslabel.Size = FolderProgress.Size;
+            //progresslabel.Location = FolderProgress.Location;
+            //progresslabel.Size = FolderProgress.Size;
+            int dX = FolderProgress.Location.X + (int)((float)FolderProgress.Width / 2f) - (int)((float)progresslabel.Width / 2f);
+            int dY = FolderProgress.Location.Y + (int)((float)FolderProgress.Height / 2f) - (int)((float)progresslabel.Height / 2f); ;
+            progresslabel.Location = new Point(dX, dY);
+
         }
         //Select a folder to process
         private void openFolderToolStripMenuItem_Click(object sender, EventArgs e)
@@ -196,6 +202,30 @@ namespace ImageSorter
 
 
         }
+
+        //reload current folder
+        private void ReloadFolder()
+        {
+            //hold my Undo history...
+            Stack<Tuple<string, string>> undoBackup = new Stack<Tuple<string, string>>();
+            //shove it in there
+            while(UndoStack.Count>0)
+            {
+                undoBackup.Push(UndoStack.Pop());
+            }
+            //load the folder again
+            OpenFolder(CurrentDir.FullName);
+            //the load clears undo history, good thing we backed that up
+            while (undoBackup.Count > 0)
+            {
+                UndoStack.Push(undoBackup.Pop());
+            }
+            //Extend the progress bar by undo history
+            FolderProgress.Maximum += UndoStack.Count();
+            Advance();
+
+        }
+
         /// <summary>
         /// Try parsing a configuration line.
         /// </summary>
@@ -574,8 +604,10 @@ namespace ImageSorter
         //align the progress label to the progress bar on resize
         private void MainFrm_SizeChanged(object sender, EventArgs e)
         {
-            progresslabel.Location = FolderProgress.Location;
-            progresslabel.Size = FolderProgress.Size;
+            int dX = FolderProgress.Location.X+(int)((float)FolderProgress.Width/2f)- (int)((float)progresslabel.Width / 2f);
+            int dY = FolderProgress.Location.Y + (int)((float)FolderProgress.Height / 2f) - (int)((float)progresslabel.Height / 2f); ;
+            progresslabel.Location = new Point(dX, dY) ;
+            //progresslabel.Size = FolderProgress.Size;
         }
         //show rename dialog and set the rename target 
         private void renameOnMoveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -588,6 +620,11 @@ namespace ImageSorter
             {
                 NewFileName = prompt.FileName;
             }
+        }
+
+        private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReloadFolder();
         }
     }
 }

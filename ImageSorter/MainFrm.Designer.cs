@@ -32,11 +32,12 @@
             this.MM = new System.Windows.Forms.MenuStrip();
             this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lockKeysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.renameOnMoveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ImageContainer = new System.Windows.Forms.PictureBox();
             this.KeyBindList = new System.Windows.Forms.ListBox();
-            this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.progresslabel = new System.Windows.Forms.Label();
-            this.renameOnMoveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MM.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImageContainer)).BeginInit();
             this.SuspendLayout();
@@ -45,8 +46,10 @@
             // 
             this.FolderProgress.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.FolderProgress.Location = new System.Drawing.Point(0, 471);
+            this.FolderProgress.MarqueeAnimationSpeed = 1;
             this.FolderProgress.Name = "FolderProgress";
             this.FolderProgress.Size = new System.Drawing.Size(1032, 23);
+            this.FolderProgress.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.FolderProgress.TabIndex = 0;
             // 
             // MM
@@ -55,7 +58,8 @@
             this.openFolderToolStripMenuItem,
             this.lockKeysToolStripMenuItem,
             this.undoToolStripMenuItem,
-            this.renameOnMoveToolStripMenuItem});
+            this.renameOnMoveToolStripMenuItem,
+            this.refreshToolStripMenuItem});
             this.MM.Location = new System.Drawing.Point(0, 0);
             this.MM.Name = "MM";
             this.MM.Size = new System.Drawing.Size(1032, 24);
@@ -80,6 +84,30 @@
             this.lockKeysToolStripMenuItem.Text = "Lock keybinds";
             this.lockKeysToolStripMenuItem.Click += new System.EventHandler(this.lockKeysToolStripMenuItem_Click);
             // 
+            // undoToolStripMenuItem
+            // 
+            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
+            this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.undoToolStripMenuItem.Text = "Undo";
+            this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
+            // 
+            // renameOnMoveToolStripMenuItem
+            // 
+            this.renameOnMoveToolStripMenuItem.Name = "renameOnMoveToolStripMenuItem";
+            this.renameOnMoveToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
+            this.renameOnMoveToolStripMenuItem.Size = new System.Drawing.Size(112, 20);
+            this.renameOnMoveToolStripMenuItem.Text = "Rename on move";
+            this.renameOnMoveToolStripMenuItem.Click += new System.EventHandler(this.renameOnMoveToolStripMenuItem_Click);
+            // 
+            // refreshToolStripMenuItem
+            // 
+            this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
+            this.refreshToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
+            this.refreshToolStripMenuItem.Text = "Refresh";
+            this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
+            // 
             // ImageContainer
             // 
             this.ImageContainer.BackColor = System.Drawing.Color.Black;
@@ -100,31 +128,16 @@
             this.KeyBindList.Size = new System.Drawing.Size(120, 447);
             this.KeyBindList.TabIndex = 3;
             // 
-            // undoToolStripMenuItem
-            // 
-            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
-            this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(48, 25);
-            this.undoToolStripMenuItem.Text = "Undo";
-            this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
-            // 
             // progresslabel
             // 
+            this.progresslabel.BackColor = System.Drawing.Color.Transparent;
             this.progresslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.progresslabel.Location = new System.Drawing.Point(423, 474);
+            this.progresslabel.Location = new System.Drawing.Point(445, 474);
             this.progresslabel.Name = "progresslabel";
-            this.progresslabel.Size = new System.Drawing.Size(100, 23);
+            this.progresslabel.Size = new System.Drawing.Size(78, 23);
             this.progresslabel.TabIndex = 4;
             this.progresslabel.Text = "---/---";
             this.progresslabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // renameOnMoveToolStripMenuItem
-            // 
-            this.renameOnMoveToolStripMenuItem.Name = "renameOnMoveToolStripMenuItem";
-            this.renameOnMoveToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.renameOnMoveToolStripMenuItem.Size = new System.Drawing.Size(112, 25);
-            this.renameOnMoveToolStripMenuItem.Text = "Rename on move";
-            this.renameOnMoveToolStripMenuItem.Click += new System.EventHandler(this.renameOnMoveToolStripMenuItem_Click);
             // 
             // MainFrm
             // 
@@ -161,6 +174,7 @@
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.Label progresslabel;
         private System.Windows.Forms.ToolStripMenuItem renameOnMoveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
     }
 }
 
