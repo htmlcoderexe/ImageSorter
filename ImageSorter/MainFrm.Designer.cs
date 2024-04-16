@@ -116,9 +116,9 @@
             // 
             this.ImageContainer.BackColor = System.Drawing.Color.Black;
             this.ImageContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ImageContainer.Location = new System.Drawing.Point(0, 24);
+            this.ImageContainer.Location = new System.Drawing.Point(0, 0);
             this.ImageContainer.Name = "ImageContainer";
-            this.ImageContainer.Size = new System.Drawing.Size(912, 447);
+            this.ImageContainer.Size = new System.Drawing.Size(912, 471);
             this.ImageContainer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ImageContainer.TabIndex = 2;
             this.ImageContainer.TabStop = false;
@@ -127,9 +127,9 @@
             // 
             this.KeyBindList.Dock = System.Windows.Forms.DockStyle.Right;
             this.KeyBindList.FormattingEnabled = true;
-            this.KeyBindList.Location = new System.Drawing.Point(912, 24);
+            this.KeyBindList.Location = new System.Drawing.Point(912, 0);
             this.KeyBindList.Name = "KeyBindList";
-            this.KeyBindList.Size = new System.Drawing.Size(120, 447);
+            this.KeyBindList.Size = new System.Drawing.Size(120, 471);
             this.KeyBindList.TabIndex = 3;
             // 
             // progresslabel
@@ -147,7 +147,8 @@
             // 
             this.MainControls.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton1});
-            this.MainControls.Location = new System.Drawing.Point(0, 24);
+            this.MainControls.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.MainControls.Location = new System.Drawing.Point(0, 0);
             this.MainControls.Name = "MainControls";
             this.MainControls.Size = new System.Drawing.Size(912, 39);
             this.MainControls.TabIndex = 5;
