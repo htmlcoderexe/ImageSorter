@@ -42,7 +42,7 @@ namespace ImageSorter
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
-
+        //enable editing of the extension if requested here
         private void ExtBox_DoubleClick(object sender, EventArgs e)
         {
             ExtBox.Enabled = true;
@@ -50,7 +50,7 @@ namespace ImageSorter
 
         private void RenameFile_Load(object sender, EventArgs e)
         {
-
+            //should probably also load the filename at some point or something
             ExtBox.Text = FileExtension;
         }
     }
