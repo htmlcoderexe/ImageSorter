@@ -25,3 +25,5 @@ If you accidentally pressed the wrong button and sent an image the wrong way, yo
 Pressing F2 now allows to specify a custom filename to be used for the image when it gets moved to target folder - as a consequence of this, the program checks if a file by that name already exists in that folder, attempts to create a useable filename and offers the user the option of using that as the destination filename to complete the move.
 
 F5 reloads the folder but keeps progress and Undo states.
+
+Coming soon: crappy pixel art!
