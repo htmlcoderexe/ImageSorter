@@ -68,6 +68,7 @@
             this.MM.Size = new System.Drawing.Size(1032, 24);
             this.MM.TabIndex = 1;
             this.MM.Text = "menuStrip1";
+            this.MM.Visible = false;
             // 
             // openFolderToolStripMenuItem
             // 
@@ -148,7 +149,7 @@
             this.toolStripButton1});
             this.MainControls.Location = new System.Drawing.Point(0, 24);
             this.MainControls.Name = "MainControls";
-            this.MainControls.Size = new System.Drawing.Size(912, 135);
+            this.MainControls.Size = new System.Drawing.Size(912, 39);
             this.MainControls.TabIndex = 5;
             this.MainControls.Text = "toolStrip1";
             // 
@@ -159,8 +160,8 @@
             this.toolStripButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(132, 132);
-            this.toolStripButton1.Text = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(36, 36);
+            this.toolStripButton1.Text = "Open Folder";
             // 
             // MainFrm
             // 
