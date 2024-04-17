@@ -25,20 +25,20 @@ namespace ImageSorter
         
         private void CreateKeyBinding_Load(object sender, EventArgs e)
         {
-            //show the keychar to assign a folder to
+            // show the keychar to assign a folder to
             if (Key != ' ')
-                KeyCharLabel.Text = "<"+Key.ToString()+">";
+                KeyCharLabel.Text = "<" + Key.ToString() + ">";
         }
-        //try creating the folder and return the result on success
+        // try creating the folder and return the result on success
         private void OkButt_Click(object sender, EventArgs e)
         {
-            //create the complete path to try using
+            // create the complete path to try using
             string fullpath = Path.Combine(RootFolder, folderInput.Text);
             try
             {
                 Directory.CreateDirectory(fullpath);
             }
-            //on failure, display error and stop, allowing the user to try a different directory
+            // on failure, display error and stop, allowing the user to try a different directory
             catch (Exception ex)
             {
                 MessageBox.Show("Unable to create the directory specified: \r\n"+ex.Message, "Directory error", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -20,6 +20,8 @@ namespace ImageSorter
         // looks like ":=" asignment operator and is actually
         // a mathematical symbol (one of!) for assigning a variable.
         const char Separator = '≔';
+        // progress display string (Folder name: completed/total)
+        const string ProgressBarLabelString = "{0}: {1}/{2}";
         // stores the file currently operated on
         string CurrentPath;
         // used for rename functionality, stores new filename that will be used in the target dir
@@ -115,13 +117,13 @@ namespace ImageSorter
             //if the queue is empty, the folder is complete
             if(Todo.Count<1)
             {
-                //clear the image preview
+                // clear the image preview
                 ImageContainer.Image = null;
-                //tell the user
+                // tell the user
                 MessageBox.Show("This folder has no more images.", "Done!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 FolderProgress.Value = FolderProgress.Maximum;
                 // update the label
-                progresslabel.Text = FolderProgress.Maximum+"/" + FolderProgress.Maximum.ToString();
+                progresslabel.Text = $"{CurrentDir.Name}: Complete!";
                 Todo = null;
                 return;
             }
@@ -135,7 +137,7 @@ namespace ImageSorter
             // update progress bar
             FolderProgress.Value = FolderProgress.Maximum-(Todo.Count() + 1);
             // update progress bar label
-            progresslabel.Text=(FolderProgress.Maximum - (Todo.Count())).ToString()+"/" + FolderProgress.Maximum.ToString();
+            progresslabel.Text = string.Format(ProgressBarLabelString, CurrentDir.Name, FolderProgress.Value.ToString(), FolderProgress.Maximum.ToString());
             // useful to display current path, maybe change it to a display box somewhere
             this.Text = CurrentPath;
             // try displaying the image
@@ -160,20 +162,13 @@ namespace ImageSorter
             SubFolders = new Dictionary<char, string>();
             UpdateKeyBindList();
             UndoStack = new Stack<Tuple<string, string>>();
-            // align the label to the progress bar on form init
-            int dX = FolderProgress.Location.X + (int)((float)FolderProgress.Width / 2f) - (int)((float)progresslabel.Width / 2f);
-            int dY = FolderProgress.Location.Y + (int)((float)FolderProgress.Height / 2f) - (int)((float)progresslabel.Height / 2f); ;
-            progresslabel.Location = new Point(dX, dY);
-
         }
 
 
         // align the progress label to the progress bar on resize
         private void MainFrm_SizeChanged(object sender, EventArgs e)
         {
-            int dX = FolderProgress.Location.X + (int)((float)FolderProgress.Width / 2f) - (int)((float)progresslabel.Width / 2f);
-            int dY = FolderProgress.Location.Y + (int)((float)FolderProgress.Height / 2f) - (int)((float)progresslabel.Height / 2f); ;
-            progresslabel.Location = new Point(dX, dY);
+
         }
 
         /// <summary>

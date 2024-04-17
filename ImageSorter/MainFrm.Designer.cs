@@ -38,7 +38,6 @@
             this.renameOnMoveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.KeyBindList = new System.Windows.Forms.ListBox();
-            this.progresslabel = new System.Windows.Forms.Label();
             this.MainControls = new System.Windows.Forms.ToolStrip();
             this.OpenButton = new System.Windows.Forms.ToolStripButton();
             this.ReloadButton = new System.Windows.Forms.ToolStripButton();
@@ -47,6 +46,7 @@
             this.RenamePreview = new System.Windows.Forms.ToolStripLabel();
             this.KeybindLockToggle = new System.Windows.Forms.ToolStripButton();
             this.ImageContainer = new System.Windows.Forms.PictureBox();
+            this.progresslabel = new System.Windows.Forms.ToolStripLabel();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.MM.SuspendLayout();
@@ -137,21 +137,10 @@
             // 
             this.KeyBindList.Dock = System.Windows.Forms.DockStyle.Right;
             this.KeyBindList.FormattingEnabled = true;
-            this.KeyBindList.Location = new System.Drawing.Point(912, 0);
+            this.KeyBindList.Location = new System.Drawing.Point(912, 39);
             this.KeyBindList.Name = "KeyBindList";
-            this.KeyBindList.Size = new System.Drawing.Size(120, 471);
+            this.KeyBindList.Size = new System.Drawing.Size(120, 432);
             this.KeyBindList.TabIndex = 3;
-            // 
-            // progresslabel
-            // 
-            this.progresslabel.BackColor = System.Drawing.Color.Transparent;
-            this.progresslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.progresslabel.Location = new System.Drawing.Point(445, 474);
-            this.progresslabel.Name = "progresslabel";
-            this.progresslabel.Size = new System.Drawing.Size(78, 23);
-            this.progresslabel.TabIndex = 4;
-            this.progresslabel.Text = "---/---";
-            this.progresslabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MainControls
             // 
@@ -163,10 +152,11 @@
             this.RenameButton,
             this.RenamePreview,
             toolStripSeparator1,
-            this.KeybindLockToggle});
+            this.KeybindLockToggle,
+            this.progresslabel});
             this.MainControls.Location = new System.Drawing.Point(0, 0);
             this.MainControls.Name = "MainControls";
-            this.MainControls.Size = new System.Drawing.Size(912, 39);
+            this.MainControls.Size = new System.Drawing.Size(1032, 39);
             this.MainControls.TabIndex = 5;
             // 
             // OpenButton
@@ -235,24 +225,32 @@
             // 
             this.ImageContainer.BackColor = System.Drawing.Color.Black;
             this.ImageContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ImageContainer.Location = new System.Drawing.Point(0, 0);
+            this.ImageContainer.Location = new System.Drawing.Point(0, 39);
             this.ImageContainer.Name = "ImageContainer";
-            this.ImageContainer.Size = new System.Drawing.Size(912, 471);
+            this.ImageContainer.Size = new System.Drawing.Size(912, 432);
             this.ImageContainer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ImageContainer.TabIndex = 2;
             this.ImageContainer.TabStop = false;
+            // 
+            // progresslabel
+            // 
+            this.progresslabel.DoubleClickEnabled = true;
+            this.progresslabel.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.progresslabel.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.progresslabel.Name = "progresslabel";
+            this.progresslabel.Size = new System.Drawing.Size(181, 36);
+            this.progresslabel.Text = "No folder loaded";
             // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1032, 494);
-            this.Controls.Add(this.MainControls);
-            this.Controls.Add(this.progresslabel);
             this.Controls.Add(this.ImageContainer);
             this.Controls.Add(this.KeyBindList);
             this.Controls.Add(this.FolderProgress);
             this.Controls.Add(this.MM);
+            this.Controls.Add(this.MainControls);
             this.KeyPreview = true;
             this.MainMenuStrip = this.MM;
             this.Name = "MainFrm";
@@ -278,7 +276,6 @@
         private System.Windows.Forms.ListBox KeyBindList;
         private System.Windows.Forms.ToolStripMenuItem lockKeysToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
-        private System.Windows.Forms.Label progresslabel;
         private System.Windows.Forms.ToolStripMenuItem renameOnMoveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
         private System.Windows.Forms.ToolStrip MainControls;
@@ -288,6 +285,7 @@
         private System.Windows.Forms.ToolStripButton RenameButton;
         private System.Windows.Forms.ToolStripButton KeybindLockToggle;
         private System.Windows.Forms.ToolStripLabel RenamePreview;
+        private System.Windows.Forms.ToolStripLabel progresslabel;
     }
 }
 
