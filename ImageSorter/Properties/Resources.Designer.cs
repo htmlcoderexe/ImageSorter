@@ -63,6 +63,16 @@ namespace ImageSorter.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap IconLocked {
+            get {
+                object obj = ResourceManager.GetObject("IconLocked", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap IconOpenFile {
             get {
                 object obj = ResourceManager.GetObject("IconOpenFile", resourceCulture);
@@ -73,9 +83,39 @@ namespace ImageSorter.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap IconReload {
+            get {
+                object obj = ResourceManager.GetObject("IconReload", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap IconRename {
+            get {
+                object obj = ResourceManager.GetObject("IconRename", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap IconUndo {
             get {
                 object obj = ResourceManager.GetObject("IconUndo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap IconUnlocked {
+            get {
+                object obj = ResourceManager.GetObject("IconUnlocked", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -107,5 +107,17 @@
   <ItemGroup>
     <None Include="Resources\IconUndo.bmp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IconReload.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IconRename.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IconLocked.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IconUnlocked.bmp" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

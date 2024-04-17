@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+            System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
             this.FolderProgress = new System.Windows.Forms.ProgressBar();
             this.MM = new System.Windows.Forms.MenuStrip();
             this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,13 +40,31 @@
             this.KeyBindList = new System.Windows.Forms.ListBox();
             this.progresslabel = new System.Windows.Forms.Label();
             this.MainControls = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.OpenButton = new System.Windows.Forms.ToolStripButton();
+            this.ReloadButton = new System.Windows.Forms.ToolStripButton();
+            this.UndoButton = new System.Windows.Forms.ToolStripButton();
+            this.RenameButton = new System.Windows.Forms.ToolStripButton();
+            this.RenamePreview = new System.Windows.Forms.ToolStripLabel();
+            this.KeybindLockToggle = new System.Windows.Forms.ToolStripButton();
             this.ImageContainer = new System.Windows.Forms.PictureBox();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.MM.SuspendLayout();
             this.MainControls.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImageContainer)).BeginInit();
             this.SuspendLayout();
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.AutoSize = false;
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new System.Drawing.Size(6, 32);
+            // 
+            // toolStripSeparator2
+            // 
+            toolStripSeparator2.AutoSize = false;
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new System.Drawing.Size(6, 32);
             // 
             // FolderProgress
             // 
@@ -136,24 +156,80 @@
             // MainControls
             // 
             this.MainControls.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.toolStripButton2});
-            this.MainControls.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.OpenButton,
+            this.ReloadButton,
+            this.UndoButton,
+            toolStripSeparator2,
+            this.RenameButton,
+            this.RenamePreview,
+            toolStripSeparator1,
+            this.KeybindLockToggle});
             this.MainControls.Location = new System.Drawing.Point(0, 0);
             this.MainControls.Name = "MainControls";
             this.MainControls.Size = new System.Drawing.Size(912, 39);
             this.MainControls.TabIndex = 5;
-            this.MainControls.Text = "toolStrip1";
             // 
-            // toolStripButton1
+            // OpenButton
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = global::ImageSorter.Properties.Resources.IconOpenFile;
-            this.toolStripButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButton1.Text = "Open Folder";
+            this.OpenButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.OpenButton.Image = global::ImageSorter.Properties.Resources.IconOpenFile;
+            this.OpenButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.OpenButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.OpenButton.Name = "OpenButton";
+            this.OpenButton.Size = new System.Drawing.Size(36, 36);
+            this.OpenButton.Text = "Open Folder";
+            this.OpenButton.Click += new System.EventHandler(this.OpenButton_Click);
+            // 
+            // ReloadButton
+            // 
+            this.ReloadButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.ReloadButton.Image = global::ImageSorter.Properties.Resources.IconReload;
+            this.ReloadButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.ReloadButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ReloadButton.Name = "ReloadButton";
+            this.ReloadButton.Size = new System.Drawing.Size(36, 36);
+            this.ReloadButton.Text = "Reload Folder";
+            this.ReloadButton.Click += new System.EventHandler(this.ReloadButton_Click);
+            // 
+            // UndoButton
+            // 
+            this.UndoButton.CheckOnClick = true;
+            this.UndoButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.UndoButton.Image = global::ImageSorter.Properties.Resources.IconUndo;
+            this.UndoButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.UndoButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.UndoButton.Name = "UndoButton";
+            this.UndoButton.Size = new System.Drawing.Size(36, 36);
+            this.UndoButton.Text = "Undo";
+            this.UndoButton.Click += new System.EventHandler(this.UndoButton_Click);
+            // 
+            // RenameButton
+            // 
+            this.RenameButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.RenameButton.Image = global::ImageSorter.Properties.Resources.IconRename;
+            this.RenameButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.RenameButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.RenameButton.Name = "RenameButton";
+            this.RenameButton.Size = new System.Drawing.Size(36, 36);
+            this.RenameButton.Text = "Rename";
+            this.RenameButton.Click += new System.EventHandler(this.RenameButton_Click);
+            // 
+            // RenamePreview
+            // 
+            this.RenamePreview.Name = "RenamePreview";
+            this.RenamePreview.Size = new System.Drawing.Size(0, 36);
+            // 
+            // KeybindLockToggle
+            // 
+            this.KeybindLockToggle.CheckOnClick = true;
+            this.KeybindLockToggle.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.KeybindLockToggle.Image = global::ImageSorter.Properties.Resources.IconUnlocked;
+            this.KeybindLockToggle.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.KeybindLockToggle.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.KeybindLockToggle.Name = "KeybindLockToggle";
+            this.KeybindLockToggle.Size = new System.Drawing.Size(36, 36);
+            this.KeybindLockToggle.Text = "toolStripButton3";
+            this.KeybindLockToggle.Click += new System.EventHandler(this.KeybindLockToggle_Click);
             // 
             // ImageContainer
             // 
@@ -165,17 +241,6 @@
             this.ImageContainer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ImageContainer.TabIndex = 2;
             this.ImageContainer.TabStop = false;
-            // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.CheckOnClick = true;
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = global::ImageSorter.Properties.Resources.IconUndo;
-            this.toolStripButton2.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButton2.Text = "Undo";
             // 
             // MainFrm
             // 
@@ -217,8 +282,12 @@
         private System.Windows.Forms.ToolStripMenuItem renameOnMoveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
         private System.Windows.Forms.ToolStrip MainControls;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton OpenButton;
+        private System.Windows.Forms.ToolStripButton UndoButton;
+        private System.Windows.Forms.ToolStripButton ReloadButton;
+        private System.Windows.Forms.ToolStripButton RenameButton;
+        private System.Windows.Forms.ToolStripButton KeybindLockToggle;
+        private System.Windows.Forms.ToolStripLabel RenamePreview;
     }
 }
 
