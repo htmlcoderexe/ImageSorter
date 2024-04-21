@@ -30,7 +30,7 @@ namespace ImageSorter
         private void FileInput_TextChanged(object sender, EventArgs e)
         {
             //only enable the button if the name is not emtpy and doesn't contain invalid characters
-            if (FileInput.Text != "" || !MainFrm.IsNameInvalid(FileInput.Text))
+            if (FileInput.Text != "" || !ImageSorterSingleton.IsNameInvalid(FileInput.Text))
                 OKButt.Enabled = true;
             else
                 OKButt.Enabled = false;
@@ -50,7 +50,7 @@ namespace ImageSorter
 
         private void RenameFile_Load(object sender, EventArgs e)
         {
-            //should probably also load the filename at some point or something
+            // should probably also load the filename at some point or something
             ExtBox.Text = FileExtension;
         }
     }

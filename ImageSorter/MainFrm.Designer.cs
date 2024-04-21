@@ -255,6 +255,7 @@
             this.MainMenuStrip = this.MM;
             this.Name = "MainFrm";
             this.Text = "Image Sorter";
+            this.Load += new System.EventHandler(this.MainFrm_Load);
             this.SizeChanged += new System.EventHandler(this.MainFrm_SizeChanged);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.MainFrm_KeyPress);
             this.MM.ResumeLayout(false);

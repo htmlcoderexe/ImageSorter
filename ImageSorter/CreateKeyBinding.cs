@@ -44,16 +44,16 @@ namespace ImageSorter
                 MessageBox.Show("Unable to create the directory specified: \r\n"+ex.Message, "Directory error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            //set return values and close the box
+            // set return values and close the box
             this.Folder = folderInput.Text;
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
-        //update the state of the OK button as the folder name changes
+        // update the state of the OK button as the folder name changes
         private void folderInput_TextChanged(object sender, EventArgs e)
         {
-            //only enable the button if the name is not emtpy and doesn't contain invalid characters
-            if (folderInput.Text != "" ||!MainFrm.IsNameInvalid(folderInput.Text))
+            // only enable the button if the name is not emtpy and doesn't contain invalid characters
+            if (folderInput.Text != "" || !ImageSorterSingleton.IsNameInvalid(folderInput.Text))
                 OkButt.Enabled = true;
             else
                 OkButt.Enabled = false;

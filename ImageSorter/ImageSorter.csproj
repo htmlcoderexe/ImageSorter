@@ -67,6 +67,7 @@
     <Compile Include="CreateKeyBinding.Designer.cs">
       <DependentUpon>CreateKeyBinding.cs</DependentUpon>
     </Compile>
+    <Compile Include="FileOpSingleton.cs" />
     <Compile Include="MainFrm.cs">
       <SubType>Form</SubType>
     </Compile>
